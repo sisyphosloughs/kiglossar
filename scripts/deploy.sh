@@ -12,7 +12,7 @@ PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 source "$SCRIPT_DIR/runlib/runlib.sh"
 
 DEPLOY_HOST="milos"
-DEPLOY_PATH="/opt/www/kiglossar/"
+DEPLOY_PATH="/opt/www/kiglossar"
 DEPLOY_URL="https://kiglossar.schreibauf.de"
 LOG_DIR="$SCRIPT_DIR/logs"
 LOG_KEEP_DAYS=30
