@@ -1,0 +1,29 @@
+# Editor / OS noise
+.DS_Store
+*.swp
+
+# Host-specific configuration and secrets — never commit.
+# Everything ending in .conf is live configuration; only the templates
+# (*.conf.example) are versioned.
+*.conf
+!*.conf.example
+
+# Runtime logs (each script creates its own logs/ via log_init)
+logs/
+
+# Reports written by docker-stack-inventory (secret-free by construction, but
+# host inventory data — not versioned)
+out/
+
+# Local tooling
+.claude/settings.local.json
+
+# Mutagen sync session (host-specific); only mutagen.example.yml is versioned
+mutagen.yml
+mutagen.yml.lock
+
+# Blume
+node_modules/
+.blume/
+dist/
+.env.local
