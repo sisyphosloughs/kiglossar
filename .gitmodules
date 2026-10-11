@@ -1,0 +1,3 @@
+[submodule "scripts/runlib"]
+	path = scripts/runlib
+	url = git@github.com:sisyphosloughs/runlib.git
