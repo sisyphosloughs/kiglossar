@@ -1,8 +1,112 @@
 ---
-title: Introduction
-description: Welcome to your new documentation site. Edit this page or add Markdown files beside it, and Blume turns each file into a page.
+title: KI-Glossar
+description: Begriffe rund um KI, kurz erklärt.
 ---
 
-Welcome to **Blume**, the open-source docs framework for humans and agents.
-
-Edit `docs/index.mdx` and save: this page reloads with your changes.
+<CardGroup cols={2}>
+  <Card title="Agent" href="/agent">
+    Ein Agent ist ein System, in dem ein LLM seine Arbeitsschritte und die Nutzung von Tools selbst steuert und dabei kontrolliert, wie es…
+  </Card>
+  <Card title="API (Application Programming Interface)" href="/api-application-programming-interface">
+    Eine API (Programmierschnittstelle) ermöglicht es, Funktionen einer Software direkt aus einem anderen Programm heraus aufzurufen.
+  </Card>
+  <Card title="Backend" href="/backend">
+    Ein Backend ist in einer Inferenz-Engine wie llama.cpp die Komponente, über die die Berechnungen auf einer bestimmten Hardware laufen.
+  </Card>
+  <Card title="Benchmark" href="/benchmark">
+    Ein Benchmark ist ein Test oder eine Sammlung von Tests, mit denen die Leistung von LLMs gemessen und Modelle miteinander verglichen werden.
+  </Card>
+  <Card title="Embedding" href="/embedding">
+    Ein Embedding ist eine numerische Darstellung von Daten wie Text, Bildern oder Videos als Vektor aus Gleitkommazahlen, die Beziehungen…
+  </Card>
+  <Card title="Endpoint" href="/endpoint">
+    Ein Endpoint ist die Adresse (URL), unter der eine API Anfragen entgegennimmt.
+  </Card>
+  <Card title="Fine-Tuning" href="/fine-tuning">
+    Fine-Tuning (Feinabstimmung) ist ein zusätzlicher, aufgabenspezifischer Trainingsdurchlauf, bei dem die Parameter eines vortrainierten…
+  </Card>
+  <Card title="Halluzination" href="/halluzination">
+    Eine Halluzination ist eine plausibel wirkende, aber sachlich falsche Ausgabe eines generativen KI-Modells, die als Aussage über die…
+  </Card>
+  <Card title="Harness" href="/harness">
+    Ein Harness umfasst alles an einem Agenten außer dem Modell selbst (Agent = Modell + Harness).
+  </Card>
+  <Card title="Inferenz-Engine" href="/inferenz-engine">
+    Eine Inferenz-Engine ist die Software, die die Inferenz eines Modells berechnet.
+  </Card>
+  <Card title="Inferenz" href="/inferenz">
+    Inferenz bezeichnet bei LLMs den Vorgang, mit einem trainierten Modell eine Antwort auf einen Prompt zu erzeugen.
+  </Card>
+  <Card title="Inferenzserver" href="/inferenzserver">
+    Ein Inferenzserver stellt eine Inferenz-Engine als Dienst bereit, in der Regel über einen Endpoint per HTTP. Zu dieser Serving-Schicht…
+  </Card>
+  <Card title="KI (Künstliche Intelligenz)" href="/ki-künstliche-intelligenz">
+    Künstliche Intelligenz (KI) ist ein Forschungs- und Anwendungsgebiet der Informatik, es umfasst verschiedene Klassen von…
+  </Card>
+  <Card title="Kontextfenster (Context Window)" href="/kontextfenster-context-window">
+    Das Kontextfenster ist die Anzahl an Token, die ein Modell in einem Prompt verarbeiten kann.
+  </Card>
+  <Card title="LLM (Large Language Model)" href="/llm-large-language-model">
+    Ein LLM (Large Language Model, großes Sprachmodell) ist ein Sprachmodell mit sehr vielen Parametern, das auf großen Textmengen trainiert…
+  </Card>
+  <Card title="Mixture-of-Experts (MoE)" href="/mixture-of-experts-moe">
+    Mixture-of-Experts (MoE) ist ein Verfahren, bei dem ein neuronales Netz für jedes eingegebene Token nur eine Teilmenge seiner Parameter…
+  </Card>
+  <Card title="Modell" href="/modell">
+    Ein Modell ist im maschinellen Lernen die Menge aus Parametern und Struktur, die ein System für Vorhersagen benötigt.
+  </Card>
+  <Card title="Multimodal" href="/multimodal">
+    Ein multimodales Modell verarbeitet unterschiedlich strukturierte Daten (Modalitäten), z.
+  </Card>
+  <Card title="Neuronales Netz" href="/neuronales-netz">
+    Ein künstliches neuronales Netz (KNN) besteht aus künstlichen Neuronen, deren Aufbau von biologischen Nervenzellen inspiriert ist; die…
+  </Card>
+  <Card title="Open-Weights-Modell" href="/open-weights-modell">
+    Ein Open-Weights-Modell ist ein Modell, dessen trainierte Gewichte (Parameter) öffentlich zum Download bereitstehen.
+  </Card>
+  <Card title="Parameter" href="/parameter">
+    Parameter sind die Gewichte und Bias-Werte, die ein Modell beim Training lernt.
+  </Card>
+  <Card title="Prompt Engineering" href="/prompt-engineering">
+    Prompt Engineering ist die Kunst, Prompts so zu formulieren, dass ein LLM die gewünschten Antworten liefert.
+  </Card>
+  <Card title="Prompt" href="/prompt">
+    Ein Prompt ist jeder Text, der als Eingabe an ein LLM gesendet wird, um dessen Verhalten zu steuern; er kann aus einer kurzen Phrase…
+  </Card>
+  <Card title="Quantisierung" href="/quantisierung">
+    Quantisierung bedeutet, die Parameter eines Modells mit geringerer Bitbreite zu speichern; bei der Inferenz werden sie wieder…
+  </Card>
+  <Card title="RAG (Retrieval-Augmented Generation)" href="/rag-retrieval-augmented-generation">
+    RAG (Retrieval-Augmented Generation) ist eine Technik, bei der zu einer Anfrage passende Informationen aus einer externen Wissensbasis…
+  </Card>
+  <Card title="Runtime (LLM-Engine)" href="/runtime-llm-engine">
+    Runtime ist ein mehrdeutiger Begriff, den Quellen im Umfeld lokaler LLMs für unterschiedliche Schichten verwenden.
+  </Card>
+  <Card title="Skill" href="/skill">
+    Ein Skill ist in Claude Code eine Datei SKILL.md mit Anweisungen, die Claude seinem Werkzeugkasten hinzufügt.
+  </Card>
+  <Card title="System-Prompt" href="/system-prompt">
+    Ein System-Prompt wird über ein eigenes Feld der API-Anfrage (bei Anthropic: system) an das Modell übergeben und legt…
+  </Card>
+  <Card title="Temperatur" href="/temperatur">
+    Die Temperatur ist eine Einstellung, die steuert, wie zufällig die Ausgaben eines Modells ausfallen; Google ordnet sie als…
+  </Card>
+  <Card title="Token" href="/token">
+    Token sind die kleinsten Einheiten, in denen ein Sprachmodell Text verarbeitet; sie können Wörtern, Wortteilen, einzelnen Zeichen oder…
+  </Card>
+  <Card title="Tool Calling (Function Calling)" href="/tool-calling-function-calling">
+    Tool Calling (auch Function Calling) ermöglicht einem Modell, Funktionen aufzurufen, die du definierst oder die der Anbieter bereitstellt.
+  </Card>
+  <Card title="Training" href="/training">
+    Training ist der Prozess, in dem ein Modell seine Parameter lernt; in jeder Iteration werden Gewichte und Bias-Werte anhand des Fehlers…
+  </Card>
+  <Card title="Transformer" href="/transformer">
+    Der Transformer ist eine 2017 vorgestellte Architektur für neuronale Netze, die ausschließlich auf Attention-Mechanismen beruht und auf…
+  </Card>
+  <Card title="Vektordatenbank" href="/vektordatenbank">
+    Eine Vektordatenbank ist ein Datenbanksystem zum Speichern und Durchsuchen von Vektoren, das auf die effiziente Suche nach ähnlichen…
+  </Card>
+  <Card title="VRAM und Unified Memory" href="/vram-und-unified-memory">
+    VRAM ist der eigene Speicher einer Grafikkarte, der vom System-RAM getrennt ist; Modelle, die größer als der VRAM sind, müssen…
+  </Card>
+</CardGroup>
