@@ -1,0 +1,4 @@
+.prose p,
+.prose li {
+  font-size: 1.125rem; /* 18px statt 16px, Überschriften bleiben unverändert */
+}
