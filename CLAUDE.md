@@ -11,7 +11,7 @@ KI-Glossar is a German-language (`de`) glossary site built with [Blume](https://
 - `npm run dev` — local dev server with live reload (`blume dev`)
 - `npm run build` — build the static site into `dist/` (`blume build`)
 - `npm run doctor` — Blume config/content diagnostics
-- `deploy/deploy.sh [--dry-run] [--no-build]` — build, then `rsync --delete` `dist/` to `milos:/opt/www/kiglossar/`. Use `--dry-run` first to preview changes on the server.
+- `scripts/deploy/deploy.sh [--dry-run] [--no-build]` — build, then `rsync --delete` `dist/` to `milos:/opt/www/kiglossar/`. Use `--dry-run` first to preview changes on the server.
 
 There are no tests or linters.
 
@@ -21,4 +21,4 @@ There are no tests or linters.
   1. `filesystem({ root: "docs" })` — MDX pages in this repo (currently only [docs/index.mdx](docs/index.mdx), still the Blume placeholder).
   2. `obsidian({ vault: "/Users/bbruecker/Notizen/IT/KI/_KI-Glossar" })` — the actual glossary content lives in an Obsidian vault **outside this repo** at an absolute local path (folders `Templates` and `Daily` are excluded). Builds only work on a machine where that vault exists; glossary entries are edited in Obsidian, not here.
 - `.blume/` (generated), `dist/` and `node_modules/` are gitignored.
-- [deploy/deploy.sh](deploy/deploy.sh) is built on the `deploy/runlib` git submodule (shell library for logging, locking, notifications, worker loop). Run `git submodule update --init` after cloning. The script reads an optional untracked `deploy/global.conf`; all `*.conf` files are gitignored (only `*.conf.example` is versioned), and logs go to `deploy/logs/`. The deploy refuses to sync if `dist/index.html` is missing, since `--delete` would otherwise wipe the server.
+- [scripts/deploy/deploy.sh](scripts/deploy/deploy.sh) is built on the `scripts/deploy/runlib` git submodule (shell library for logging, locking, notifications, worker loop). Run `git submodule update --init` after cloning. The script reads an optional untracked `scripts/deploy/global.conf`; all `*.conf` files are gitignored (only `*.conf.example` is versioned), and logs go to `scripts/deploy/logs/`. The deploy refuses to sync if `dist/index.html` is missing, since `--delete` would otherwise wipe the server.
