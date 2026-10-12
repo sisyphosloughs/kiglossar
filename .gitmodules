@@ -1,3 +1,6 @@
 [submodule "deploy/runlib"]
 	path = scripts/deploy/runlib
 	url = git@github.com:sisyphosloughs/runlib.git
+[submodule "scripts/obsidian2blume"]
+	path = scripts/obsidian2blume
+	url = git@github.com:sisyphosloughs/obsidian2blume.git
