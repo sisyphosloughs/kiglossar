@@ -1,0 +1,7 @@
+li:has(> a[href="#footnote-label"]) {
+  display: none; /* disable footnote labels */
+}
+
+prose {
+  font-size: 1rem; /* 16px instead of 14px */
+}
