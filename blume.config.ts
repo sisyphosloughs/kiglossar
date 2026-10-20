@@ -13,6 +13,14 @@ export default defineConfig({
     ],
   },
   feedback: false,
+  footer: {
+    copyright: `${new Date().getFullYear()} Benjamin Brücker`,
+    links: [
+      { label: "Über dieses Glossar", href: "/ueber" },
+      { label: "Impressum", href: "/impressum" },
+      { label: "Datenschutz", href: "/datenschutz" },
+    ],
+  },
   content: {
     sources: [
       filesystem({ root: "docs" }),
