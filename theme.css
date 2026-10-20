@@ -5,3 +5,17 @@ li:has(> a[href="#footnote-label"]) {
 prose {
   font-size: 1rem; /* 16px instead of 14px */
 }
+
+/* Footer: alles zentriert, Eintraege durch Pipe-Zeichen getrennt */
+footer[data-blume-footer] > div {
+  display: flex !important; /* ersetzt das Drei-Spalten-Raster ab md */
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+footer[data-blume-footer] ul:not([class*="ms-auto"]) > li + li::before,
+footer[data-blume-footer] p::before {
+  content: "|";
+  margin-inline-end: 1.25rem;
+}
