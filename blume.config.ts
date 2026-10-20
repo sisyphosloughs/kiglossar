@@ -12,6 +12,7 @@ export default defineConfig({
       { code: "de", label: "Deutsch" },
     ],
   },
+  feedback: false,
   content: {
     sources: [
       filesystem({ root: "docs" }),
