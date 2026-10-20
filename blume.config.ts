@@ -2,7 +2,7 @@ import { defineConfig } from "blume";
 import { filesystem, obsidian } from "blume/sources";
 export default defineConfig({
   title: "KI-Glossar",
-  description: "Documentation powered by Blume.",
+  description: "Begriffe rund um KI, kurz erklärt.",
   deployment: {
     site: "https://kiglossar.schreibauf.de",
   },
