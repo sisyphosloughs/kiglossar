@@ -1,0 +1,168 @@
+---
+/**
+ * KartenIndex – erzeugt die Kartenübersicht automatisch aus den Glossar-Notizen.
+ *
+ * - Quelle: alle Seiten der Collection "staged" (Obsidian-Vault) mit `type: glossar`
+ * - Text der Karte: nur der Abschnitt unter "## Definition" (ohne die Überschrift);
+ *   Vergleichsseiten ohne Definition: der Abschnitt unter "## Worum es geht"
+ * - Ausgeschlossen: versteckte Seiten (z. B. Impressum, Datenschutz, Über dieses
+ *   Glossar), Seiten ohne passenden Typ sowie Pfade aus der Prop `exclude`
+ * - Keine Worttrennung (weiche Trennstriche werden entfernt, CSS: hyphens: none)
+ */
+import { getCollection } from "astro:content";
+import data from "blume:data";
+import { getBlumeCollection } from "blume/runtime";
+
+interface Props {
+  /** Collection mit den Notizen (Obsidian-Quelle: "staged") */
+  collection?: string;
+  /** Nur Seiten mit diesem Frontmatter-`type` */
+  type?: string;
+  /** Nur Routen unter diesem Pfad-Präfix, z. B. "/glossar" (leer = alle) */
+  prefix?: string;
+  /** Zusätzlich auszuschließende Pfade, z. B. ["/agent"] */
+  exclude?: string[];
+}
+
+const {
+  collection = "staged",
+  type = "glossar",
+  prefix,
+  exclude = [],
+} = Astro.props;
+
+const normalisiere = (p: string) => p.replace(/\/+$/, "") || "/";
+const ausgeschlossen = new Set(exclude.map(normalisiere));
+
+// Weiche Trennstriche (U+00AD) entfernen, Leerraum vereinheitlichen
+const bereinigen = (s: unknown) =>
+  String(s ?? "")
+    .replace(/­/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+// Überschriften, deren Abschnitt als Kartentext dient – die erste vorhandene gilt
+const TEXT_UEBERSCHRIFTEN = ["Definition", "Worum es geht"];
+
+// Text unter der ersten passenden "## …"-Überschrift (ohne Überschrift) als Klartext
+const definitionsText = (body?: string) => {
+  if (!body) return "";
+  const zeilen = body.replace(/\r\n/g, "\n").split("\n");
+  let start = -1;
+  for (const titel of TEXT_UEBERSCHRIFTEN) {
+    start = zeilen.findIndex(
+      (z) => z.trim().toLowerCase() === `## ${titel}`.toLowerCase()
+    );
+    if (start !== -1) break;
+  }
+  if (start === -1) return "";
+
+  const abschnitt: string[] = [];
+  for (const z of zeilen.slice(start + 1)) {
+    if (/^#{1,2}\s/.test(z)) break; // nächste Überschrift Ebene 1 oder 2
+    abschnitt.push(z);
+  }
+
+  const klartext = abschnitt
+    .join("\n")
+    .replace(/%%[\s\S]*?%%/g, "") // Obsidian-Kommentare
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, "") // MDX-Kommentare
+    .replace(/<!--[\s\S]*?-->/g, "") // HTML-Kommentare
+    .replace(/\[\^[^\]]+\]/g, "") // Fußnotenverweise [^quelle]
+    .replace(/!\[\[[^\]]*\]\]|!\[[^\]]*\]\([^)]*\)/g, "") // Bilder, Einbettungen
+    .replace(/\[\[([^\]]+)\]\]/g, (_m, inner: string) => {
+      const [ziel, label] = inner.split("|");
+      return label ?? ziel.split("#")[0].split("/").pop() ?? ""; // Wikilinks
+    })
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1") // Markdown-Links
+    .replace(/^>\s*\[![^\]]*\].*$/gm, "") // Callout-Kopfzeilen
+    .replace(/<[^>]+>/g, "") // HTML-Tags
+    .replace(/^\s*(?:>|[-*+]|\d+\.)\s+/gm, "") // Zitat- und Listenzeichen
+    .replace(/\*\*(.+?)\*\*/g, "$1") // fett
+    .replace(/\*(.+?)\*/g, "$1") // kursiv
+    .replace(/`/g, ""); // Code-Zeichen
+
+  return bereinigen(klartext);
+};
+
+// Routen: ohne Entwürfe, versteckte Seiten und Fallback-Kopien (macht der Helfer)
+const routen = getBlumeCollection(data, {
+  collection,
+  prefix,
+  locale: data.config.i18n?.defaultLocale,
+}).filter((r) => !ausgeschlossen.has(normalisiere(r.path)));
+
+const pfadJeEintrag = new Map(routen.map((r) => [r.entryId, r.path]));
+
+const karten = (await getCollection(collection as "docs"))
+  .filter((e) => pfadJeEintrag.has(e.id) && e.data.type === type)
+  .map((e) => {
+    const href = pfadJeEintrag.get(e.id) as string;
+    return {
+      href,
+      titel: bereinigen(e.data.title) || href.split("/").filter(Boolean).pop(),
+      text: definitionsText(e.body),
+    };
+  })
+  .sort((a, b) => String(a.titel).localeCompare(String(b.titel), "de"));
+---
+
+<div class="karten-index">
+  {
+    karten.map((k) => (
+      <a class="karte" href={k.href}>
+        <strong class="karte-titel">{k.titel}</strong>
+        {k.text && <span class="karte-text">{k.text}</span>}
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .karten-index {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    margin-block: 1.5rem;
+  }
+
+  /* Regel: keine Worttrennung */
+  .karten-index,
+  .karten-index * {
+    hyphens: none;
+    -webkit-hyphens: none;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .karte {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border, rgba(128, 128, 128, 0.35));
+    border-radius: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease;
+  }
+
+  .karte:hover {
+    border-color: currentColor;
+  }
+
+  .karte-titel {
+    font-weight: 600;
+  }
+
+  .karte-text {
+    opacity: 0.75;
+    font-size: 0.9em;
+    line-height: 1.5;
+    /* Definition auf 5 Zeilen kürzen (mit „…“), ohne Wörter zu trennen */
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
